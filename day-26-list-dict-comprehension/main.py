@@ -24,12 +24,18 @@ for (index, row) in student_data_frame.iterrows():
 {"A": "Alfa", "B": "Bravo"}
 npa_df = pandas.read_csv("nato_phonetic_alphabet.csv")
 npa_dict = {row.letter: row.code for (index, row) in npa_df.iterrows()}
-#print(npa_dict)
+print(npa_dict)
 
 #TODO 2. Create a list of the phonetic code words from a word that the user inputs.
-input_word = input("Insert a word: ")
-print(f"The phonetic code words for the {input_word} is as follows:")
-for letter in input_word:
-    print(letter)
-phonetic_code_words = [npa_dict[letter.upper()] for letter in input_word]
-print(phonetic_code_words)
+def generate_phoentic():
+    input_word = input("Insert a word: ")
+    print(f"The phonetic code words for the {input_word} is as follows:")
+    # for letter in input_word:
+    #    print(letter)
+    try:
+        phonetic_code_words = [npa_dict[letter.upper()] for letter in input_word]
+    except KeyError as key:
+        print(f"Sorry, Invalid character {key}! Only letters in alphabet please.")
+    else:
+        print(phonetic_code_words)
+generate_phoentic()
