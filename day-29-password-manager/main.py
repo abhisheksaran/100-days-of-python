@@ -3,6 +3,7 @@ from tkinter import messagebox
 import pyperclip
 import json
 
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def set_password():
     random_password = generate_password()
@@ -39,9 +40,9 @@ def save_password():
     username = username_entry.get().strip()
     password = password_entry.get().strip()
     new_data = {
-        website:{
-            "username":username,
-            "password":password,
+        website: {
+            "username": username,
+            "password": password,
         }
     }
     # Validate the entries ie entries don't contain any whitespace or are empty.
@@ -71,6 +72,28 @@ def save_password():
             # Clear the entries
             website_entry.delete(0, END)
             password_entry.delete(0, END)
+            website_entry.focus()
+
+
+# ---------------------------- SEARCH PASSWORD ------------------------------- #
+def find_password():
+    website_name = website_entry.get()
+    try:
+        with open("data.json", "r") as data_file:
+            data = json.load(data_file)
+            website_data = data[website_name]
+
+    except FileNotFoundError:
+        messagebox.showerror(title="Oops", message="No data file found.")
+    except KeyError:
+        messagebox.showerror(title="Oops", message=f"No entry with website: {website_name} exists.")
+    else:
+        username = website_data["username"]
+        password = website_data["password"]
+        messagebox.showinfo(title="Login Credentials", message=f"Username: {username},\n Password: {password}")
+    finally:
+        website_entry.delete(0, END)
+        website_entry.focus()
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -95,9 +118,9 @@ password_label = Label(text="Password:")
 password_label.grid(column=0, row=3)
 
 # Create the entries
-website_entry = Entry(width=38)
+website_entry = Entry(width=21)
 website_entry.focus()
-website_entry.grid(column=1, row=1, columnspan=2)
+website_entry.grid(column=1, row=1)
 
 username_entry = Entry(width=38)
 username_entry.insert(0, "abhishekbishnoi694@gmail.com")
@@ -107,6 +130,9 @@ password_entry = Entry(width=21)
 password_entry.grid(column=1, row=3)
 
 # Create buttons
+search_button = Button(text="Search", command=find_password, width=13)
+search_button.grid(column=2, row=1)
+
 genpass_button = Button(text="Generate Password", command=set_password)
 genpass_button.grid(column=2, row=3)
 
