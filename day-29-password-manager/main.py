@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 import pyperclip
+import json
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def set_password():
@@ -37,7 +38,12 @@ def save_password():
     website = website_entry.get().strip()
     username = username_entry.get().strip()
     password = password_entry.get().strip()
-
+    new_data = {
+        website:{
+            "username":username,
+            "password":password,
+        }
+    }
     # Validate the entries ie entries don't contain any whitespace or are empty.
     if not website or not username or not password:
         messagebox.showerror(title="Oops", message="Please make sure you haven't left any field empty.")
@@ -47,14 +53,24 @@ def save_password():
                                        message=f'These are the detail entered: \nEmail/Username: {username}\nPassword: {password}')
 
     if is_ok:
-        with open("data.txt", "a") as f:
-            entry = " | ".join([website, username, password]) + "\n"
-            # print(entry)
-            f.write(entry)
+        try:
+            with open("data.json", "r") as data_file:
+                # Reading the old data
+                data = json.load(data_file)
+                # Updating the old data
+                data.update(new_data)
 
-    # Clear the entries
-    website_entry.delete(0, END)
-    password_entry.delete(0, END)
+        # if there is no file data.json
+        except FileNotFoundError:
+            data = new_data
+
+        finally:
+            with open("data.json", "w") as data_file:
+                # Saving updated data
+                json.dump(data, data_file, indent=4)
+            # Clear the entries
+            website_entry.delete(0, END)
+            password_entry.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
