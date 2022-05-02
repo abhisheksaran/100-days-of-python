@@ -1,0 +1,4 @@
+name, email, day, month, year
+Abhishek, abhishekbishnoi694@gmail.com, 02, 08, 1999
+Abhishek2, abhishekbishnoi695@gmail.com, 02, 07, 1999
+Abhishek3, abhishekbishnoi693@gmail.com, 02, 05, 1999
