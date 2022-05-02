@@ -4,7 +4,7 @@ import random
 import datetime as dt
 
 # Get email password
-with open("emails.json", 'r') as f:
+with open("../emails.json", 'r') as f:
     data = json.load(f)
 my_email = 'abhishekbishnoi693@gmail.com'
 password = data[my_email]['password']
@@ -28,4 +28,3 @@ if now.weekday() == 0:
             from_addr=my_email,
             to_addrs="abhishekbishnoi693@gmail.com",
             msg=f"Subject:Quote for the week\n\n{random_quote}")
-        connection.close()
