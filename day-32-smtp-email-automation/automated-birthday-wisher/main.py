@@ -34,6 +34,12 @@ for bday in bd_list:
         send_mail_to(bday['name'], bday['email'])
 
 # TODO Make a cron job to be run on your computer everyday at 10 AM
+# Many ways to do this
+
+# 1. Create a docker image and run it as a cron jon in kubernetes
+# 2. Schedule it daily in your local system using crontab
+# For example-
+
 ## Open crontab in vim
 # export VISUAL=vim; crontab -e
 ## Run the script at 12 PM every day using this below cron schedule
