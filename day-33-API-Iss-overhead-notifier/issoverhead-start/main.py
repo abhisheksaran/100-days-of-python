@@ -8,7 +8,7 @@ MY_LONG = 77.102493  # Your longitude
 MY_EMAIL = "abhishekbishnoi693@gmail.com"
 
 # Get Email Credentials
-with open("../emails.json", 'r') as f:
+with open("../../emails.json", 'r') as f:
     data = json.load(f)
 EMAIL = 'abhishekbishnoi693@gmail.com'
 PASSWORD = data[EMAIL]['password']
@@ -48,19 +48,16 @@ parameters = {
 response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
 response.raise_for_status()
 data = response.json()
-print(data)
 sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0]) + 5.30
 sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0]) + 5.30
 
-print(sunset)
-print(sunrise)
 time_now = datetime.now()
 hour_now = time_now.hour
 
 # If the ISS is close to my current position
 # and it is currently dark
 # Then send me an email to tell me to look up.
-if(is_iss_overhead(iss_latitude, iss_longitude) and hour_now >= sunset and hour_now <= sunrise ):
+if is_iss_overhead(iss_latitude, iss_longitude) and sunset <= hour_now <= sunrise:
     send_mail_to(MY_EMAIL)
 
 # BONUS: run the code every 60 seconds.

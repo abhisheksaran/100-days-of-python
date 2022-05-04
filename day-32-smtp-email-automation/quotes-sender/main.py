@@ -4,7 +4,7 @@ import random
 import datetime as dt
 
 # Get email password
-with open("../emails.json", 'r') as f:
+with open("../../emails.json", 'r') as f:
     data = json.load(f)
 my_email = 'abhishekbishnoi693@gmail.com'
 password = data[my_email]['password']

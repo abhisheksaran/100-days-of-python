@@ -18,7 +18,7 @@ def send_mail_to(name, mail_id):
                             msg=f'Subject: Happy Birthday\n\n{bday_msg}')
 
 # Get Email Credentials
-with open("../emails.json", 'r') as f:
+with open("../../emails.json", 'r') as f:
     data = json.load(f)
 EMAIL = 'abhishekbishnoi693@gmail.com'
 PASSWORD = data[EMAIL]['password']
